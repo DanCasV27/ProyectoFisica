@@ -8,4 +8,4 @@ Guia de instalación para este juego en python:
 
 4.Por ultimo , proceda abrir la terminal desde VSCode e instalar la libreria de pygame utilizando  pip install pygame
 
-5. tras seguir estos pasos, deberia poder ejecutar el programa sin problemas
+5.Tras seguir estos pasos, deberia poder ejecutar el programa sin problemas
