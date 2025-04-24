@@ -81,6 +81,9 @@ while True:
         
         # Movimiento de la paleta
         keys = pygame.key.get_pressed()
+        #agregi una variable para tener la posicion antes de moverse
+        previous_paddle_x = paddle_x
+        #fin de linea nueva
         if keys[pygame.K_LEFT] and paddle_x > 0:
             paddle_x -= paddle_speed
         if keys[pygame.K_RIGHT] and paddle_x < WIDTH - PADDLE_WIDTH:
@@ -113,6 +116,11 @@ while True:
         paddle_rect = pygame.Rect(paddle_x, paddle_y, PADDLE_WIDTH, PADDLE_HEIGHT)
         if paddle_rect.colliderect(pygame.Rect(ball_x, ball_y, BALL_RADIUS, BALL_RADIUS)):
             ball_speed_y *= -1  # Cambio de dirección en el eje y al rebotar en la paleta
+            paddle_velocity=paddle_x-previous_paddle_x
+            k=0.1
+            ball_speed_x+=k*paddle_velocity
+            
+       
         
         # Colisión con los bloques
         # Iteramos sobre los bloques y verificamos si colisionan con la pelota
@@ -126,10 +134,10 @@ while True:
                 score += 10  # Incrementamos el puntaje
                 # Incrementar velocidad cada 50 puntos
                 # Aumentamos la magnitud de la velocidad en ambos ejes para hacer el juego más desafiante
-                if score % 50 == 0:
+                if score % 150 == 0:
                     ball_speed_x += 2 if ball_speed_x > 0 else -2  # Aumentamos la velocidad en x
                     ball_speed_y += 2 if ball_speed_y > 0 else -2  # Aumentamos la velocidad en y
-        
+                    paddle_speed = int(paddle_speed * 2)
         # Game over si la pelota cae
         # Si la pelota supera la altura del área de juego, el juego termina
         if ball_y >= GAME_HEIGHT:
