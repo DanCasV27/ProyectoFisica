@@ -22,7 +22,8 @@ GRAY = (200, 200, 200)
 # Configuración de la paleta
 PADDLE_WIDTH = 100
 PADDLE_HEIGHT = 10
-paddle_speed = 8
+INITIAL_PADDLE_SPEED = 8
+paddle_speed = INITIAL_PADDLE_SPEED
 
 # Configuración de la pelota
 BALL_RADIUS = 8
@@ -62,6 +63,9 @@ def reset_game():
     # Estado del juego
     running = True
     game_over = False
+    global paddle_speed, speed_boost_applied
+    paddle_speed = INITIAL_PADDLE_SPEED
+    speed_boost_applied = False
 
 reset_game()
 
@@ -134,10 +138,11 @@ while True:
                 score += 10  # Incrementamos el puntaje
                 # Incrementar velocidad cada 50 puntos
                 # Aumentamos la magnitud de la velocidad en ambos ejes para hacer el juego más desafiante
-                if score % 150 == 0:
+                if score % 150 == 0 and not speed_boost_applied:
                     ball_speed_x += 2 if ball_speed_x > 0 else -2  # Aumentamos la velocidad en x
                     ball_speed_y += 2 if ball_speed_y > 0 else -2  # Aumentamos la velocidad en y
                     paddle_speed = int(paddle_speed * 2)
+                    speed_boost_applied = True
         # Game over si la pelota cae
         # Si la pelota supera la altura del área de juego, el juego termina
         if ball_y >= GAME_HEIGHT:
